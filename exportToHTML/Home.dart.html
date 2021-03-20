@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>Home.dart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000000;}
+.s1 { color: #008000; font-weight: bold;}
+.s2 { color: #000080; font-weight: bold;}
+.s3 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Home.dart</font>
+</center></td></tr></table>
+<pre>import <span class="s1">'package:flutter/material.dart'</span>;
+
+<span class="s2">class </span>Home <span class="s2">extends </span>StatefulWidget {
+  @override
+  _HomeState createState() =&gt; _HomeState();
+}
+
+<span class="s2">class </span>_HomeState <span class="s2">extends </span>State&lt;Home&gt; {
+  TextEditingController _controllerAlcool = TextEditingController();
+  TextEditingController _controllerGasolina = TextEditingController();
+  String _mensagem = <span class="s1">&quot;&quot;</span>;
+  <span class="s2">void </span>_calcular(){
+     double alcool = double.tryParse(_controllerAlcool.text);
+     double gasolina = double.tryParse(_controllerGasolina.text);
+     double fator = double.parse(_controllerAlcool.text)/double.parse(_controllerGasolina.text);
+     <span class="s2">if </span>(alcool==<span class="s2">null </span>|| gasolina==<span class="s2">null</span>){
+       setState(() {
+         _mensagem = <span class="s1">&quot;Use um ponto ao digitar o valor do combustível. Ex. 1.59&quot;</span>;
+       });
+     } <span class="s2">else </span>{
+       double fator = alcool/gasolina;
+       setState(() {
+         <span class="s2">if </span>(fator&gt;=<span class="s3">0.7</span>){
+           _mensagem=<span class="s1">&quot;É melhor abastecer com gasolina&quot;</span>;
+         } <span class="s2">else </span>{
+           _mensagem=<span class="s1">&quot;É melhor abastecer com alcool&quot;</span>;
+         }
+       });
+     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    <span class="s2">return </span>Scaffold(
+      appBar: AppBar(
+        title: Text(<span class="s1">&quot;Álcool ou Gasolina&quot;</span>),
+        backgroundColor: Colors.blue,
+      ),
+      body: Container(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(<span class="s3">32</span>),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: &lt;Widget&gt;[
+              Padding(
+                padding: EdgeInsets.only(bottom: <span class="s3">32</span>),
+                child: Image.asset(<span class="s1">&quot;images/logo.png&quot;</span>),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: <span class="s3">10</span>),
+                child: Text(
+                  <span class="s1">&quot;Saiba qual a melhor opção para abastecimento do seu carro&quot;</span>,
+                  style: TextStyle(
+                      fontSize: <span class="s3">25</span>,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: <span class="s1">&quot;Preço Alcool, ex: 1.59&quot;</span>
+                ),
+                style: TextStyle(
+                    fontSize: <span class="s3">22</span>
+                ),
+                controller: _controllerAlcool,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: <span class="s1">&quot;Preço Gasolina, ex: 3.59&quot;</span>
+                ),
+                style: TextStyle(
+                    fontSize: <span class="s3">22</span>
+                ),
+                controller: _controllerGasolina,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: <span class="s3">10</span>),
+                child: RaisedButton(
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(<span class="s3">15</span>),
+                    child: Text(
+                      <span class="s1">&quot;Calcular&quot;</span>,
+                      style: TextStyle(
+                          fontSize: <span class="s3">20</span>
+                      ),
+                    ),
+                    onPressed: _calcular,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: <span class="s3">20</span>),
+                child: Text(
+                  _mensagem,
+                  style: TextStyle(
+                      fontSize: <span class="s3">22</span>,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+</pre>
+</body>
+</html>
